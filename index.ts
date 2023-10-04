@@ -9,13 +9,16 @@ import { webSocketConnection } from './webSocket';
 //For env File 
 dotenv.config();
 const port = Number(process.env.PORT)
+const URLFrontDev = process.env.URL_FRONT_DEV as string
+const URLFrontProd = process.env.URL_FRONT_PROD as string
+
 
 const app: Application = express();
 const server = createServer(app)
 // TODO: Spécifier les urls pour CORS et pas laisser "*"
 const io = new Server(server, {
   cors:{
-    origin: "*"
+    origin: [URLFrontDev, URLFrontProd]
   }
 })
 
