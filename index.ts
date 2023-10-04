@@ -6,7 +6,6 @@ import dotenv from 'dotenv';
 
 import { webSocketConnection } from './webSocket';
 
-//For env File 
 dotenv.config();
 const port = Number(process.env.PORT)
 const URLFrontDev = process.env.URL_FRONT_DEV as string
@@ -27,9 +26,6 @@ app.get('/', (req: Request, res: Response) => {
 
 io.on('connection', (socket) => webSocketConnection(socket, io))
 
-// server.listen(Number(port), hostname,() => {
-//   console.log(`Server is Fire at ${hostname}:${port}`);
-// });
 server.listen(port,() => {
   console.log(`Server is Fire at port ${port}`);
 });

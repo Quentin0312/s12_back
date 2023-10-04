@@ -7,10 +7,8 @@ export type RoomType = {
     board: boardStateDictType,
 }
 
-// TODO: Utiliser une DB !?
-// TODO: Augmenter le nombre de rooms disponible
 // TODO: Mettre en place cas ou toutes les rooms sont pleines (création de nouvelles rooms)
-let rooms: RoomType[] = [0,1,2].map((id) => {
+let rooms: RoomType[] = [0,1,2,3,4,5,6,7,8,9].map((id) => {
     return {
         id,
         playerOneSocketId: undefined,

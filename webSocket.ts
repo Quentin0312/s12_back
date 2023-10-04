@@ -22,7 +22,6 @@ export function webSocketConnection(socket: Socket, io:Server) {
       io.to(roomId).to(room.playerOneSocketId as string).emit("opponent ready")
     }
   
-    // TODO: Put the anonymous functions in external functions
     socket.on("move", (req: PlayerMoveType) => onMove(io, socket, req, room, roomId, playerPiece))
   
     socket.on("disconnect", () => {
