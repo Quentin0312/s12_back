@@ -29,6 +29,6 @@ io.on('connection', (socket) => webSocketConnection(socket, io))
 // server.listen(Number(port), hostname,() => {
 //   console.log(`Server is Fire at ${hostname}:${port}`);
 // });
-server.listen(port, hostname,() => {
+server.listen(port,() => {
   console.log(`Server is Fire at ${hostname}`);
 });
