@@ -15,7 +15,6 @@ const URLFrontProd = process.env.URL_FRONT_PROD as string
 
 const app: Application = express();
 const server = createServer(app)
-// TODO: Spécifier les urls pour CORS et pas laisser "*"
 const io = new Server(server, {
   cors:{
     origin: [URLFrontDev, URLFrontProd]
