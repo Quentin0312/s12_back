@@ -39,3 +39,19 @@ export function onMove(io: Server, socket: Socket, req: PlayerMoveType, room: Ro
       io.to(roomId).emit('moved', updatedRoom.board)
     }
 }
+
+//import { Message } from "./message.utils"
+export function communication(io: Server, roomId: string, idPlayer: number, 
+  req: string){
+
+    console.log("===================================")
+    console.log(req)
+    console.log(idPlayer)
+    console.log("===================================")
+    
+    io.to(roomId).emit("message", {
+      idPlayer: idPlayer,
+      contenu: req
+    })
+    //const message = new Message(req) 
+}

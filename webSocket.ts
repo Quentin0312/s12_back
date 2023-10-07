@@ -2,7 +2,7 @@ import { Server, Socket } from "socket.io";
 
 import { PieceEnum, PlayerMoveType } from "./utils/board.utils";
 import { getAvailableRoom, updateRooms, resetRoom } from "./utils/room.utils";
-import { onMove } from "./utils/webSocket.utils";
+import { communication, onMove } from "./utils/webSocket.utils";
 
 export function webSocketConnection(socket: Socket, io:Server) {
   
@@ -23,6 +23,9 @@ export function webSocketConnection(socket: Socket, io:Server) {
     }
   
     socket.on("move", (req: PlayerMoveType) => onMove(io, socket, req, room, roomId, playerPiece))
+    socket.on("message", (req: string) => communication(io, roomId, player, req)
+    
+    )
   
     socket.on("disconnect", () => {
       // Disconnect the other player
