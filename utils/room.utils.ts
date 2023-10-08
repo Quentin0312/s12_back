@@ -1,10 +1,19 @@
-import { boardStateDictType, getInitialBoard } from "./board.utils"
+import { PieceEnum, boardStateDictType, getInitialBoard } from "./board.utils"
+
+// TODO: Ajouter message.utils.ts !?
+export type ChatMessageType = {
+  who: PieceEnum,
+  message: string,
+  temps: string,
+  image ?: any
+}
 
 export type RoomType = {
     id: number,
     playerOneSocketId: string | undefined,
     playerTwoSocketId: string | undefined,
     board: boardStateDictType,
+    messages: ChatMessageType[]
 }
 
 // TODO: Mettre en place cas ou toutes les rooms sont pleines (création de nouvelles rooms)
@@ -13,9 +22,12 @@ let rooms: RoomType[] = [0,1,2,3,4,5,6,7,8,9].map((id) => {
         id,
         playerOneSocketId: undefined,
         playerTwoSocketId: undefined,
-        board: getInitialBoard()
+        board: getInitialBoard(),
+        messages: []
     }
 })
+
+// TODO: Refactor => create fonction getRoomsById 
 
 export function getRooms() {
     return rooms
@@ -31,7 +43,7 @@ export function getAvailableRoom() {
 }
 
 // TODO: Rename
-export function updateRooms(room: RoomType, socketId: string) {
+export function updateRoomsWithSocketId(room: RoomType, socketId: string) {
     let player:number;
     if (!room.playerOneSocketId) {
       room.playerOneSocketId = socketId
@@ -54,8 +66,17 @@ export function resetRoom(roomId: number) {
         id: roomId,
         playerOneSocketId: undefined,
         playerTwoSocketId: undefined,
-        board: getInitialBoard()    
+        board: getInitialBoard(),
+        messages: []
     })
     rooms = oldRooms
     console.log(`room ${roomId} reseted`);
+}
+
+// TODO: Just update room and return void
+export function updateRoomWithMessage(roomId: string, message: ChatMessageType) {
+  const room = rooms.filter((_room) => _room.id == Number(roomId))[0]
+  room.messages.push(message)
+
+  return room
 }

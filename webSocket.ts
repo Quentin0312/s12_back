@@ -1,14 +1,14 @@
 import { Server, Socket } from "socket.io";
 
 import { PieceEnum, PlayerMoveType } from "./utils/board.utils";
-import { getAvailableRoom, updateRooms, resetRoom } from "./utils/room.utils";
+import { getAvailableRoom, updateRoomsWithSocketId, resetRoom, ChatMessageType } from "./utils/room.utils";
 import { communication, onMove } from "./utils/webSocket.utils";
 
 export function webSocketConnection(socket: Socket, io:Server) {
   
     const room = getAvailableRoom()
     const roomId = String(room.id)
-    const player = updateRooms(room, socket.id)
+    const player = updateRoomsWithSocketId(room, socket.id)
     const playerPiece = player == 1 ? PieceEnum.yellow : PieceEnum.red // Pas une erreur ici mais intentionel (inversion=> p1:yellow ; p2:red)
     
     console.log('new player (', playerPiece, ') connected in room', roomId)
@@ -23,7 +23,7 @@ export function webSocketConnection(socket: Socket, io:Server) {
     }
   
     socket.on("move", (req: PlayerMoveType) => onMove(io, socket, req, room, roomId, playerPiece))
-    socket.on("message", (req: string) => communication(io, roomId, playerPiece, req)
+    socket.on("message", (req: ChatMessageType) => communication(io, roomId, playerPiece, req)
     
     )
   
