@@ -23,7 +23,7 @@ export function webSocketConnection(socket: Socket, io:Server) {
     }
   
     socket.on("move", (req: PlayerMoveType) => onMove(io, socket, req, room, roomId, playerPiece))
-    socket.on("message", (req: string) => communication(io, roomId, player, req)
+    socket.on("message", (req: string) => communication(io, roomId, playerPiece, req)
     
     )
   

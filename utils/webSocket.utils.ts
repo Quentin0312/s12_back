@@ -41,16 +41,16 @@ export function onMove(io: Server, socket: Socket, req: PlayerMoveType, room: Ro
 }
 
 //import { Message } from "./message.utils"
-export function communication(io: Server, roomId: string, idPlayer: number, 
+export function communication(io: Server, roomId: string, sendingPlayer: PieceEnum, 
   req: string){
-
+    // ! Stocker les messages dans rooms
     console.log("===================================")
-    console.log(req)
-    console.log(idPlayer)
+    console.log("req => ", req)
+    console.log("sending player id => ", sendingPlayer)
     console.log("===================================")
     
     io.to(roomId).emit("message", {
-      idPlayer: idPlayer,
+      sendingPlayer: sendingPlayer,
       contenu: req
     })
     //const message = new Message(req) 

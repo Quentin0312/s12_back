@@ -1,3 +1,5 @@
+// TODO: Use it !
+
 export class Message{
     contenu: string;
     id: string;
