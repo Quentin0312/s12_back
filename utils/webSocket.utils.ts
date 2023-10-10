@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io"
 import { PlayerMoveType, PieceEnum, updateBoard } from "./board.utils"
-import { RoomType, updateRooms, getRooms, resetRoom } from "./room.utils"
+import { RoomType, updateRoomsWithSocketId, getRooms, resetRoom, updateRoomWithMessage, ChatMessageType } from "./room.utils"
 import { checkWinGlobal, GameStepEnum, checkNull } from "./winDetection.utils"
 
 export function onMove(io: Server, socket: Socket, req: PlayerMoveType, room: RoomType, roomId: string, playerPiece: PieceEnum.red | PieceEnum.yellow) {
@@ -10,7 +10,7 @@ export function onMove(io: Server, socket: Socket, req: PlayerMoveType, room: Ro
     // Mise à jour du board
     // TODO: Put in a function !?
     room.board = updateBoard(req.row, req.column, room.board, playerPiece)
-    updateRooms(room, socket.id)
+    updateRoomsWithSocketId(room, socket.id)
     const updatedRoom = getRooms().filter((_room) => _room.id == room.id)[0]
 
     // Winning condition -----------------------------------------
@@ -40,18 +40,12 @@ export function onMove(io: Server, socket: Socket, req: PlayerMoveType, room: Ro
     }
 }
 
+// TODO: Rename all req and res to add info, ex: reqMessage
 //import { Message } from "./message.utils"
-export function communication(io: Server, roomId: string, idPlayer: number, 
-  req: string){
+export function communication(io: Server, roomId: string, sendingPlayer: PieceEnum, 
+  req: ChatMessageType){
+    const room = updateRoomWithMessage(roomId, req)
 
-    console.log("===================================")
-    console.log(req)
-    console.log(idPlayer)
-    console.log("===================================")
-    
-    io.to(roomId).emit("message", {
-      idPlayer: idPlayer,
-      contenu: req
-    })
+    io.to(roomId).emit("messages to update", room.messages)
     //const message = new Message(req) 
 }
