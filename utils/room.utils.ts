@@ -5,7 +5,7 @@ export type ChatMessageType = {
   who: PieceEnum;
   message: string;
   temps: string;
-  image?: any;
+  image?: any; // TODO: Delete => no user profile feature targeted
 };
 
 export type RoomType = {

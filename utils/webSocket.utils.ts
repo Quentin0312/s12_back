@@ -19,7 +19,6 @@ export function onMove(
   playerPiece: PieceEnum.red | PieceEnum.yellow
 ) {
   console.log(playerPiece, "move =>", req);
-  // TODO: Verify if the move is legal (turn, position) ?? Actualy dealt by the front
 
   // Mise à jour du board
   // TODO: Put in a function !?

@@ -2,7 +2,7 @@ export enum PieceEnum {
   red = "red",
   yellow = "yellow",
   empty = "white",
-} // TODO: Add a "standby" step ? why ?
+}
 
 export type PlayerMoveType = {
   row: number;
