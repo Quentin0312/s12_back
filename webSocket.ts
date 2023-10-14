@@ -19,7 +19,6 @@ export function webSocketConnection(socket: Socket, io: Server) {
 
   socket.emit("player color", playerPiece);
 
-  // TODO: When game ended, delete / empty the room ?
   socket.join(roomId);
 
   if (player == 2) {

@@ -1,3 +1,5 @@
+// TODO: En faire un objet !
+
 import { PieceEnum, boardStateDictType, getInitialBoard } from "./board.utils";
 
 // TODO: Ajouter message.utils.ts !?
