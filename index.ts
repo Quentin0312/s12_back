@@ -20,7 +20,7 @@ const io = new Server(server, {
 });
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome to Express & TypeScript Server");
+  res.send("Welcome to Connect 4 Express TypeScript Server");
 });
 
 io.on("connection", (socket) => webSocketConnection(socket, io));
