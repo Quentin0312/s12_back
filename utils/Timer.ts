@@ -1,7 +1,7 @@
 import { Server } from "socket.io";
-import { formatTime } from "./TimerBisUtils";
+import { formatTime } from "./TimerUtils";
 
-export default class TimerBis {
+export default class Timer {
   private currentTime: number;
   private timerInterval: NodeJS.Timeout;
   couleur: string;

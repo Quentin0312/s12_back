@@ -8,7 +8,7 @@ import {
   ChatMessageType,
 } from "./utils/room.utils";
 import { communication, onMove } from "./utils/webSocket.utils";
-import TimerBis from "./utils/TimerBis";
+import Timer from "./utils/Timer";
 
 export function webSocketConnection(socket: Socket, io: Server) {
   const room = getAvailableRoom();
@@ -29,8 +29,8 @@ export function webSocketConnection(socket: Socket, io: Server) {
       .to(room.playerOneSocketId as string)
       .emit("opponent ready");
     // Démarrage des timer
-    room.redTimer = new TimerBis(timerTime, PieceEnum.red, io, roomId);
-    room.yellowTimer = new TimerBis(timerTime, PieceEnum.yellow, io, roomId);
+    room.redTimer = new Timer(timerTime, PieceEnum.red, io, roomId);
+    room.yellowTimer = new Timer(timerTime, PieceEnum.yellow, io, roomId);
     room.redTimer.start();
   }
 

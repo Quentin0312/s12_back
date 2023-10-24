@@ -1,4 +1,4 @@
-import TimerBis from "./TimerBis";
+import Timer from "./Timer";
 import { PieceEnum, boardStateDictType, getInitialBoard } from "./board.utils";
 
 // TODO: Ajouter message.utils.ts !?
@@ -15,8 +15,8 @@ export type RoomType = {
   playerTwoSocketId: string | undefined;
   board: boardStateDictType;
   messages: ChatMessageType[];
-  redTimer?: TimerBis;
-  yellowTimer?: TimerBis;
+  redTimer?: Timer;
+  yellowTimer?: Timer;
 };
 
 // TODO: Mettre en place cas ou toutes les rooms sont pleines (création de nouvelles rooms)
