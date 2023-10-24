@@ -1,5 +1,4 @@
-// TODO: En faire un objet !
-
+import Timer from "./Timer";
 import { PieceEnum, boardStateDictType, getInitialBoard } from "./board.utils";
 
 // TODO: Ajouter message.utils.ts !?
@@ -16,6 +15,8 @@ export type RoomType = {
   playerTwoSocketId: string | undefined;
   board: boardStateDictType;
   messages: ChatMessageType[];
+  redTimer?: Timer;
+  yellowTimer?: Timer;
 };
 
 // TODO: Mettre en place cas ou toutes les rooms sont pleines (création de nouvelles rooms)
@@ -34,6 +35,11 @@ let rooms: RoomType[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((id) => {
 export function getRooms() {
   return rooms;
 }
+
+// TODO: Use this
+// function getRoomById(roomId: number) {
+//   return rooms.filter((_room) => _room.id == Number(roomId))[0];
+// }
 
 export function getAvailableRoom() {
   const roomForPlayerTwo = rooms.filter(
@@ -84,6 +90,9 @@ export function updateRoomWithMessage(
 ) {
   const room = rooms.filter((_room) => _room.id == Number(roomId))[0];
   room.messages.push(message);
+
+  // TODO: Use this instead
+  // return getRoomById(roomId).messages.push(message)
 
   return room;
 }
