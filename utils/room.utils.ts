@@ -1,5 +1,6 @@
 import Timer from "./Timer";
 import { PieceEnum, boardStateDictType, getInitialBoard } from "./board.utils";
+import { generateRandomString } from "./utils";
 
 // TODO: Ajouter message.utils.ts !?
 export type ChatMessageType = {
@@ -7,6 +8,7 @@ export type ChatMessageType = {
   message: string;
   temps: string;
   image?: any; // TODO: Delete => no user profile feature targeted
+  code: string;
 };
 
 export type RoomType = {
@@ -15,6 +17,8 @@ export type RoomType = {
   playerTwoSocketId: string | undefined;
   board: boardStateDictType;
   messages: ChatMessageType[];
+  code: string;
+  privateGame: boolean;
   redTimer?: Timer;
   yellowTimer?: Timer;
 };
@@ -27,6 +31,8 @@ let rooms: RoomType[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((id) => {
     playerTwoSocketId: undefined,
     board: getInitialBoard(),
     messages: [],
+    code: generateRandomString(5),
+    privateGame: false,
   };
 });
 
@@ -41,14 +47,26 @@ export function getRooms() {
 //   return rooms.filter((_room) => _room.id == Number(roomId))[0];
 // }
 
-export function getAvailableRoom() {
-  const roomForPlayerTwo = rooms.filter(
-    (room) => room.playerOneSocketId && !room.playerTwoSocketId
-  );
-  if (roomForPlayerTwo.length != 0) {
-    return roomForPlayerTwo[0];
-  } else {
-    return rooms.filter((room) => !room.playerOneSocketId)[0];
+export function getAvailableRoom(privateMode: boolean, code?: string) {
+  // Private game
+  if (privateMode) {
+    return code
+      ? rooms.filter((room) => room.code == code)[0]
+      : rooms.filter((room) => !room.playerOneSocketId && !room.privateGame)[0];
+  }
+  // Public game
+  else {
+    const roomForPlayerTwo = rooms.filter(
+      (room) =>
+        room.playerOneSocketId && !room.playerTwoSocketId && !room.privateGame
+    );
+    if (roomForPlayerTwo.length != 0) {
+      return roomForPlayerTwo[0];
+    } else {
+      return rooms.filter(
+        (room) => !room.playerOneSocketId && !room.privateGame
+      )[0];
+    }
   }
 }
 
@@ -78,6 +96,8 @@ export function resetRoom(roomId: number) {
     playerTwoSocketId: undefined,
     board: getInitialBoard(),
     messages: [],
+    code: generateRandomString(5),
+    privateGame: false,
   });
   rooms = oldRooms;
   console.log(`room ${roomId} reseted`);
