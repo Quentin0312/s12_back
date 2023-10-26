@@ -16,7 +16,7 @@ export function webSocketConnection(socket: Socket, io: Server) {
   const player = updateRoomsWithSocketId(room, socket.id);
   const playerPiece = player == 1 ? PieceEnum.yellow : PieceEnum.red; // Pas une erreur ici mais intentionel (inversion=> p1:yellow ; p2:red)
 
-  const timerTime = 300000;
+  const timerTime = 120000;
 
   console.log("new player (", playerPiece, ") connected in room", roomId);
 

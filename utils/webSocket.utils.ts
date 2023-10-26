@@ -35,6 +35,7 @@ export function onMove(
       result: GameStepEnum.win,
       board: updatedRoom.board,
       winningPieces: totalWinningPieces,
+      winner: playerPiece,
     });
     resetRoom(Number(roomId));
     // TODO: Verify if this works properly
