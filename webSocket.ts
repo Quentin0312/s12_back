@@ -16,7 +16,9 @@ export function webSocketConnection(socket: Socket, io: Server) {
   socket.on(
     "game is private",
     (req: { isPrivate: boolean; code: string | undefined }) => {
-      const room = getAvailableRoom(req.isPrivate, req.code);
+      const room = getAvailableRoom(req.isPrivate, socket, req.code);
+      if (!room) return;
+
       const roomId = String(room.id);
       const player = updateRoomsWithSocketId(room, socket.id);
       const playerPiece = player == 1 ? PieceEnum.yellow : PieceEnum.red; // Pas une erreur ici mais intentionel (inversion=> p1:yellow ; p2:red)

@@ -1,3 +1,4 @@
+import { Socket } from "socket.io";
 import Timer from "./Timer";
 import { PieceEnum, boardStateDictType, getInitialBoard } from "./board.utils";
 import { generateRandomString } from "./utils";
@@ -47,12 +48,25 @@ export function getRooms() {
 //   return rooms.filter((_room) => _room.id == Number(roomId))[0];
 // }
 
-export function getAvailableRoom(privateMode: boolean, code?: string) {
+export function getAvailableRoom(
+  privateMode: boolean,
+  socket: Socket,
+  code?: string
+) {
   // Private game
   if (privateMode) {
-    return code
-      ? rooms.filter((room) => room.code == code)[0]
-      : rooms.filter((room) => !room.playerOneSocketId && !room.privateGame)[0];
+    if (code) {
+      if (rooms.filter((room) => room.code == code).length > 0) {
+        return rooms.filter((room) => room.code == code)[0];
+      } else {
+        socket.emit("incorrect code"); // and delete / reset room and etc ?
+        return false;
+      }
+    } else {
+      return rooms.filter(
+        (room) => !room.playerOneSocketId && !room.privateGame
+      )[0];
+    }
   }
   // Public game
   else {
