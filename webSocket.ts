@@ -6,12 +6,19 @@ import {
   updateRoomsWithSocketId,
   resetRoom,
   ChatMessageType,
+  updateRoomToPrivate,
 } from "./utils/room.utils";
 import { communication, onMove } from "./utils/webSocket.utils";
 import Timer from "./utils/Timer";
 
 export function webSocketConnection(socket: Socket, io: Server) {
-  socket.emit("is game private");
+  socket.on("is code correct", (req: string) => {
+    let codeIsCorrect: boolean;
+    const room = getAvailableRoom(true, socket, req);
+    if (!room) codeIsCorrect = false;
+    else codeIsCorrect = true;
+    socket.emit("code is correct", codeIsCorrect);
+  });
 
   socket.on(
     "game is private",
@@ -20,6 +27,7 @@ export function webSocketConnection(socket: Socket, io: Server) {
       if (!room) return;
 
       const roomId = String(room.id);
+      if (req.isPrivate) updateRoomToPrivate(Number(roomId));
       const player = updateRoomsWithSocketId(room, socket.id);
       const playerPiece = player == 1 ? PieceEnum.yellow : PieceEnum.red; // Pas une erreur ici mais intentionel (inversion=> p1:yellow ; p2:red)
 
