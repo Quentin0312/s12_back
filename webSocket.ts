@@ -27,8 +27,8 @@ export function webSocketConnection(socket: Socket, io: Server) {
       if (!room) return;
 
       const roomId = String(room.id);
-      if (req.isPrivate) updateRoomToPrivate(Number(roomId));
       const player = updateRoomsWithSocketId(room, socket.id);
+      if (req.isPrivate) updateRoomToPrivate(Number(roomId));
       const playerPiece = player == 1 ? PieceEnum.yellow : PieceEnum.red; // Pas une erreur ici mais intentionel (inversion=> p1:yellow ; p2:red)
 
       const timerTime = 120000;

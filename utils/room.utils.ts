@@ -105,7 +105,7 @@ export function updateRoomsWithSocketId(room: RoomType, socketId: string) {
   return player;
 }
 export function updateRoomToPrivate(roomId: number) {
-  rooms.map((room) =>
+  rooms = rooms.map((room) =>
     room.id == roomId ? { ...room, privateGame: true } : room
   );
 }
