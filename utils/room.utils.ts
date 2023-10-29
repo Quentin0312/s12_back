@@ -53,13 +53,8 @@ export function getAvailableRoom(
   socket: Socket,
   code?: string
 ) {
-  console.log("privateMode", privateMode);
-  console.log("code", code);
-
   // Private game
   if (privateMode) {
-    console.log("in if 1");
-
     if (code) {
       if (rooms.filter((room) => room.code == code).length > 0) {
         return rooms.filter((room) => room.code == code)[0];
